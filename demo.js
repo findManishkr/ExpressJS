@@ -21,19 +21,44 @@ const logRequest = (req, res, next)=>{
 
 app.use(logRequest);
       
-         
+
 
 app.get('/', (req,res)=>{     // route handler
 
       console.log('this route is working');
     
-       res.json(      { name:"Manish",
+       res.json(    { success:true,
+
+                      data: { name:"Manish",
                         class:"B.Tech",
                         Branch:"Mechanical Eng",
                         age : 22
                       } 
+                    }
                 );
 });
+
+/*
+   `res.status()`:-> set http status code 
+    - used before sending data 
+  
+*/
+
+app.get('/created', (req, res) => {
+   res.status(201).json({ message: 'Resource created' });
+   
+
+});
+
+
+
+app.get('/object', (req,res)=>{
+
+    res.send({name:"manish", age:22});
+
+});
+
+
 
 
 app.listen(PORT, ()=>{

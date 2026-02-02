@@ -1,15 +1,50 @@
 const express = require('express'); //   we got access , to express function
 
 const app = express();    // app is new application express object
-
+const bodyParser = require('body-parser');
 
 // using the `app` object , bind it to a port u  want server to listen for `socket connection`
 
 const PORT = 3000;
 
+
+
+
+// use middlewares here 
+
+app.use( bodyParser.json());  // for parsing application/ json
+app.use(bodyParser.urlencoded({extended:true}));   //for parsing application// url encoded data
+app.use( bodyParser.text());     // for parsing application // text
+
+
+
+
+
+
+app.post('/user/:id', (req, res) => {
+  
+          console.log(req.headers);
+          console.log(req.params) // Data extracted from URL path variables defined in the route.
+
+  res.send('this route is also working!');
+});
+
+
+app.post('/categories/:category/product_id/:id', (req, res)=>{      // 
+         
+         console.log(req.body);  // data sent in req. body ie ( post, put,patch)
+         
+        res.status(201).send('this rounte in not working');
+})
+
+
+
+
 // define routes
 
-app.get('/', (request, response)=>{
+app.get('/live', (request, response)=>{
+
+        console.log( request.query); //  Key–value pairs after ? in the URL
        response.send("this route is woking!");
 });  //  `get()` takes two arguments 1. route as string , 2 callback fn
 
@@ -36,13 +71,10 @@ app.get('/home/aboutus', (req,res) =>{
 
 app.get('/page', (req,res)=>{
 
-        //  res.json( { name:"Manish",
-        //             age: 22,
-        //             class:"Btech" 
-        //             }
-        //         );
+        
+        console.log( req.params);
 
-        res.send(req.method);
+        res.send(req.query);
 
      });
 
